@@ -1,0 +1,3 @@
+flask-app.localhost {
+    reverse_proxy flask-app:5000
+}
