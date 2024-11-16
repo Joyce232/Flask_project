@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        <br>
+        <h1>Posts</h1>
+        <hr>
+        <div class="row">
+        {% for post in posts %}
+            <div class="col-lg-6">
+                <div class="card w-80">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ post.title }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Por:
+                            <a href="{{url_for('auth.profile', id=post.author.id)}}" style="color: #000000;">
+                             {{ post.author.username }}</a>
+                             | {{ post.created }}
+                        </h6>
+                        <p class="card-text">{{ post.description|safe }}</p>
+                        <a class="card-link btn btn-outline-dark" href="{{url_for('views.read_post', id=post.id)}}">Ler</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        <br>
+        <div class="row">
+            <h1>Editar Post</h1>
+            <hr>
+            <div class="col-md-6">
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.title.label (class="input-label")}}
+                        {{ form.title (class="form-control")}}
+                    </p>
+                    <p>
+                        {{ form.description.label (class="input-label")}}
+                        {{ form.description (class="form-control")}}
+                    <p>
+                    <p>
+                        {{ form.content.label (class="input-label")}}
+                        {{ form.content (class="form-control")}}
+                    <p>
+                    {{ form.submit (class="btn btn-dark")}}
+            </form>
+                {{ ckeditor.load() }}
+                {{ ckeditor.config(name='content') }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

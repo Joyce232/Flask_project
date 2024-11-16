@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Ler{% endblock %}
+
+{% block content %}
+    <section>
+        <div>
+            <br>
+            <div class="row">
+                <h1 class="text-center">{{ post.title }}</h1>
+                <hr>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Por: <a href="{{url_for('auth.profile', id=post.author.id)}}" style="color:#b18cd9;">
+                                {{ post.author.username }}</a> | {{ post.created }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ post.content|safe }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    {% if user.is_authenticated %}
+                    <h2>Deixe um comentário!</h2>
+                    <br>
+                    <form method="POST">
+                        {{form.hidden_tag()}}
+                        <div class="col mb-3">
+                            {{form.message.label (class="form-label")}}
+                            {{form.message (class="form-control")}}
+                        </div>
+                        {{form.submit (class="btn btn-dark")}}
+                    </form>
+                    <hr>
+                    {% endif %}
+                    <h2>Comentários</h2>
+                    <br>
+                    {% for comment in post.comments %}
+                    <div class="card">
+                        <div class="card-header">
+                             <h4><a href="{{url_for('auth.profile', id=comment.commenter.id)}}" style="color: #000000;">
+                                {{ comment.commenter.username }}</a> disse:</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>{{comment.message|safe}}</p>
+                        </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

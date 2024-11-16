@@ -1,0 +1,73 @@
+{% extends 'base.html'%}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        <br>
+        <h1>{{ profile_owner.username }}</h1>
+        <hr>
+        <h2>Posts:</h2>
+        {% if profile_owner.posts %}
+        {% for post in profile_owner.posts %}
+         <div class="col-lg-6">
+            <div class="card w-80">
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ post.created }}</h6>
+                    <p class="card-text">{{ post.description|safe }}</p>
+                    <a class="card-link btn btn-outline-dark" href="{{url_for('views.read_post', id=post.id)}}">Ler</a>
+                    {% if profile_owner.id == user.id %}
+                    <a class="btn" href="{{url_for('views.update_post', id=post.id)}}" style="color:#FFFFF0;background-color:#663399;">
+                        Editar
+                    </a>
+                    <a class="btn btn-dark" href="{{url_for('views.delete_post', id=post.id)}}">Deletar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3>Esta área está vazia... :(</h3>
+        {% endif %}
+        {% if profile_owner.id == user.id %}
+        <br>
+        <br>
+        <h2>Meus comentários</h2>
+        {% if profile_owner.user_comments %}
+        {% for comment in profile_owner.user_comments %}
+        <div class="col-lg-6">
+            <div class="card w-80">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Comentário em:
+                            {% if comment.post %}
+                             <a href="{{url_for('views.read_post', id=comment.post.id)}}" style="color:#b18cd9;">
+                            {{ comment.post.title }}:</a>
+                            {% else %}
+                            Post deletado
+                            {% endif %}
+                       </h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.message|safe }}</p>
+                    </div>
+                    {% if profile_owner.id == user.id %}
+                        <div class="card-footer">
+                            <a class="btn btn-dark" href="{{url_for('views.delete_comment', id=comment.id)}}">Deletar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        {% else %}
+        <h3>Esta área está vazia... :(</h3>
+        {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

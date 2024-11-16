@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        <br>
+        <h1>Resultados da pesquisa por...</h1>
+        <h2 style="color:#4d5966;">{{ searched }}</h2>
+        <br>
+        {% if posts %}
+        {% for post in posts %}
+        <div class="col-lg-6">
+            <div class="card w-80">
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Por: {{ post.author.username }} | {{ post.created }}
+                    </h6>
+                    <p class="card-text">{{ post.description|safe }}</p>
+                    <a class="card-link btn btn-outline-dark" href="{{url_for('views.read_post', id=post.id)}}">Ler</a>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3>Não há itens compatíveis com a sua pesquisa :(</h3>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

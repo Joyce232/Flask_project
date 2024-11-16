@@ -1,0 +1,10 @@
+.env
+pyvenv.cfg
+/__pycache__/*
+/.idea/*
+/include/*
+/share/*
+/venv/*
+/migrations/*
+/lib/*
+/lib64/*
